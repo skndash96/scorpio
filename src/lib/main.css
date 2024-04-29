@@ -80,3 +80,7 @@ button {
 button:hover {
     border-color: var(--primary);
 }
+
+button:disabled, input:disabled, textarea:disabled, option:disabled, select:disabled {
+    opacity: .7;
+}

@@ -25,7 +25,9 @@
     <label for={label}>
         {label}:
         {#if value >= 0}
-            <span style="color: var(--quadernary);">{data[value]}</span>
+            <button class="remove" on:click={() => (value=-1)}>
+                {data[value]} <span style="color:crimson;">x</span>
+            </button>
         {/if}
     </label>
 
@@ -68,6 +70,14 @@
         height: 10rem;
         overflow-y: auto;
         background: var(--elevate);
+    }
+
+    .search button.remove {
+        background: none;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        color: var(--quadernary);
     }
 
     .searchicon {

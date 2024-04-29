@@ -2,6 +2,7 @@
     import supabase from "$lib/supabase";
     import { cities, departments } from "$lib/report.js";
     import Search from "../../lib/Search.svelte";
+    import { preventFormEnter } from "$lib/utils";
 
     let /**@type {string}*/ title,
         /**@type {string}*/ info,
@@ -27,7 +28,7 @@
                     dept: departments[dept],
                     city: cities[city],
                     title,
-                    info: info.replaceAll("\n", "<br/>"), //TODO: sanitize input
+                    info, //TODO: sanitize input
                     accountable: null,
                 };
 
@@ -35,7 +36,7 @@
 
                 d.error
                     ? [console.error(d.error), rej("Failed to submit report")]
-                    : res("Report submitted");
+                    : res("Report submitted. Thank you.");
             }
         });
     }
@@ -60,6 +61,7 @@
                 bind:value={date}
                 type="date"
                 placeholder="Date"
+                on:keydown={preventFormEnter}
             />
         </fieldset>
 
@@ -70,6 +72,7 @@
                 type="text"
                 placeholder="write a suitable title"
                 bind:value={title}
+                on:keydown={preventFormEnter}
             />
         </fieldset>
 

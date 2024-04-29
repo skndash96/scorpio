@@ -9,3 +9,10 @@ export function formatTimestamp(t) {
 
     return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`;
 }
+
+/**
+ * @param {KeyboardEvent} e 
+ */
+export function preventFormEnter(e) {
+    if (e.key === "Enter") e.preventDefault();
+}

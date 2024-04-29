@@ -2,6 +2,7 @@
     import ReportList from "$lib/ReportList.svelte";
     import Search from "$lib/Search.svelte";
     import { cities, departments } from "$lib/report";
+    import { preventFormEnter } from "$lib/utils";
 
     let /**@type {number}*/city = -1,
         /**@type {number}*/dept = -1,
@@ -22,7 +23,7 @@
             <label for="words">
                 Words:
             </label>
-            <input name="words" type="text" placeholder="Look for words" />
+            <input name="words" bind:value={txt} type="text" placeholder="Look for words" on:keydown={preventFormEnter} disabled/>
         </fieldset>
         
         <Search label="Department" data={departments} bind:value={dept} />
@@ -30,7 +31,9 @@
     </form>
     </div>
     
-    <ReportList title="Latest Reports" />
+    {#key city + dept}
+    <ReportList city={cities[city]} dept={departments[dept]} />
+    {/key}
 </main>
 
 <style>
