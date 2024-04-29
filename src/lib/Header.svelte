@@ -19,6 +19,7 @@
     <div class="brand">
         <h2>
             <a href="/">
+                <span><img src="/favicon.png" alt="logo" width="20" height="20" /></span>
                 <span>S</span>corpio
             </a>
         </h2>

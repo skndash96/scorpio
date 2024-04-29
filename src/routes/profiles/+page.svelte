@@ -2,7 +2,9 @@
     import { cities } from "$lib/report.js";
     import Search from "$lib/Search.svelte";
 
-    let name, city = -1;
+    let
+    /**@type {string}*/ name,
+    city = -1;
 </script>
 
 <main>
@@ -14,11 +16,8 @@
             <input name="name" bind:value={name} type="text" placeholder="name of the official" />
         </fieldset>
 
-        <fieldset>
-            <label for="city"> City: <span style="color: var(--primary);">{city >= 0 ? cities[city] : ""}</span> </label>
-            <Search data={cities} bind:value={city} />
-        </fieldset>
-
+        <Search label="City" data={cities} bind:value={city} />
+        
         <button type="submit">
             Search
         </button>
@@ -32,13 +31,16 @@
 
 <style>
     main {
-        padding: 2rem;
         display: flex;
-        gap: 4rem;
     }
     
+    main > * {
+        padding: 1rem;
+    }
+
     form {
         max-width: 20rem;
+        border-right: 2px solid var(--elevate-dark);
     }
 
     @media (max-width: 628px) {
@@ -46,7 +48,9 @@
             flex-direction: column;
         }
         form {
+            width: fit-content;
             margin: 0 auto;
+            border: none;
         }
     }
 

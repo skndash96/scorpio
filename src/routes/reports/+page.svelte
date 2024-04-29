@@ -1,92 +1,117 @@
 <script>
-    let records = [
-        {
-            id: "id",
-            title: "My life is ruined by a cop",
-            description:
-                "This is a sample text and I have no idea what to put in here. The title is fake and does not mean anything but to catch the eyes of the viewers. So what you can do is ignore this piece of writing and read something else useful.\n. Because I don't want you in here.",
-            address:
-                "B2 Police Station, Liberty Avenue, Karamadai, Chennai - 636001",
-            time: "23 April, 2024",
-        },
-        {
-            id: "id",
-            title: "My life is ruined by a cop",
-            description:
-                "This is a sample text and I have no idea what to put in here. The title is fake and does not mean anything but to catch the eyes of the viewers. So what you can do is ignore this piece of writing and read something else useful.\n. Because I don't want you in here.",
-            address:
-                "B2 Police Station, Liberty Avenue, Karamadai, Chennai - 636001",
-            time: "23 April, 2024",
-        },
-    ];
+    import ReportList from "$lib/ReportList.svelte";
+    import Search from "$lib/Search.svelte";
+    import { cities, departments } from "$lib/report";
+
+    let /**@type {number}*/city = -1,
+        /**@type {number}*/dept = -1,
+        /**@type {string}*/txt = "";
+    
+    let formOpen = false;
 </script>
 
 <main>
-    <div class="reportBox">
-        <h3 class="title">Reports:</h3>
+    <div class="formBox">
+    <button class="formToggle icon" on:click={() => (formOpen = !formOpen)}>
+        <span> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg> </span>
+        <span> Find Reports </span>
+    </button>
 
-        {#each records as r}
-            <div class="report">
-                <a href="/"> <!--TODO-->
-                    <span style="font-size: 1.2rem; font-weight: 600;">
-                        {r.title}
-                    </span><br />
-
-                    <span class="time">
-                        {r.time}
-                    </span><br />
-
-                    <span class="address">
-                        {r.address}
-                    </span>
-
-                    <p>
-                        {r.description.slice(0, 200)}
-                        {#if r.description.length > 200}
-                            <span class="readmore"> (read more) </span>
-                        {/if}
-                    </p>
-                </a>
-            </div>
-        {/each}
+    <form class:open={formOpen} on:submit|preventDefault>
+        <fieldset>
+            <label for="words">
+                Words:
+            </label>
+            <input name="words" type="text" placeholder="Look for words" />
+        </fieldset>
+        
+        <Search label="Department" data={departments} bind:value={dept} />
+        <Search label="City" data={cities} bind:value={city} />
+    </form>
     </div>
+    
+    <ReportList title="Latest Reports" />
 </main>
 
 <style>
-    .reportBox {
+    main {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        overflow: auto;
+    }
+    
+    :global(#wrapper) {
+        height: 100vh;
+        height: 100dvh;
+    }
+    :global(footer) {
+        display: none;
+    }
+    
+    div.formBox {
+        padding: 2rem;
+        padding-bottom: 0;
+        max-width: 20rem;
+    }
+
+    form {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
-        max-width: 52rem;
-        width: fit-content;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-    .reportBox .title {
-        font-weight: 500;
+        gap: 1rem;
+        overflow: auto;
     }
 
-    .report {
-        padding: 1rem;
-        border: 2px solid var(--elevate);
-        background-color: var(--elevate);
+    label {
+        margin-bottom: .5rem;
     }
 
-    .report a {
-        text-decoration: none;
+    form input {
+        width: 100%;
     }
 
-    .report .time,
-    .report .address {
-        opacity: 0.9;
-        font-size: 0.9rem;
+    button.formToggle {
+        display: none;
+    }
+    button.formToggle span:first-child {
+        transition: all 150ms ease-out;
+    }
+    button.formToggle:has(+ form.open) span:first-child {
+        transform: rotate(180deg) translateY(-.2rem);
     }
 
-    .report p {
-        margin-top: 1rem;
-    }
+    @media (max-width: 556px) {
+        main {
+            display: initial;
+        }
 
-    .report .readmore {
-        opacity: 0.6;
+        :global(main > *) {
+            border: none !important;
+        }
+        
+        :global(#wrapper) {
+            height: unset;
+        }
+
+        button.formToggle {
+            display: block;
+            background: none;
+            border: none;
+            margin-bottom: 1rem;
+        }
+        button.formToggle:hover {
+            background: var(--elevate);
+        }
+        
+        form {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 150ms ease-out;
+        }
+
+        form.open {
+            max-height: 100vh;
+            overflow: unset;
+        }
     }
 </style>
