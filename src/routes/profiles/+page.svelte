@@ -4,6 +4,7 @@ import List from "$lib/List.svelte";
     import Profile from "$lib/Profile.svelte";
     import { cities, departments } from "$lib/report.js";
     import Search from "$lib/Search.svelte";
+    import { preventFormEnter } from "$lib/utils";
 
     let /**@type {string}*/ name,
         city = -1,
@@ -12,8 +13,6 @@ import List from "$lib/List.svelte";
 
 <FixedHeight id="profileList">
     <form>
-        <h3>Search for an Official</h3>
-
         <fieldset>
             <label for="name"> Name: </label>
             <input
@@ -21,6 +20,8 @@ import List from "$lib/List.svelte";
                 bind:value={name}
                 type="text"
                 placeholder="name of the official"
+                on:keydown={preventFormEnter}
+                disabled
             />
         </fieldset>
 
@@ -41,6 +42,9 @@ import List from "$lib/List.svelte";
         padding: 1rem;
         padding-right: 2rem;
         overflow: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     @media (max-width: 556px) {
@@ -51,11 +55,6 @@ import List from "$lib/List.svelte";
         }
     }
 
-    form h3 {
-        margin: 1rem 0;
-        text-align: center;
-    }
-
     form label {
         opacity: 0.9;
         margin-bottom: 0.5rem;
@@ -64,10 +63,6 @@ import List from "$lib/List.svelte";
     form > fieldset {
         display: flex;
         flex-direction: column;
-    }
-
-    form > * {
-        margin-top: 1.5rem;
     }
 
     form button[type="submit"] {

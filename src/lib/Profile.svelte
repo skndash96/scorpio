@@ -1,14 +1,17 @@
 <script>
-    /**@type {ProfileSchema}*/
-    export let r;
+    import { letterOfName } from "./utils";
+
+    export let
+    /**@type {ProfileSchema}*/ r;
 </script>
 
 <div class="profile">
     <a href="/profiles/{r.id}">
         <div class="image">
-            {#if !r.image}
-                {@const words = r.name.split(/\s+/)}
-                <span>{(words[1] || words[0])[0]}</span>
+            {#if r.image}
+                <img src={r.image} alt={r.name} />
+            {:else}
+                <span>{letterOfName(r.name)}</span>
             {/if}
         </div>
 
@@ -24,7 +27,7 @@
         border: 2px solid var(--elevate);
         background-color: var(--elevate);
     }
-    
+
     .profile a {
         text-decoration: none;
         display: flex;

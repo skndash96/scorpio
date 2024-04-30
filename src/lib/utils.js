@@ -16,3 +16,12 @@ export function formatTimestamp(t) {
 export function preventFormEnter(e) {
     if (e.key === "Enter") e.preventDefault();
 }
+
+/**
+ * @param {string} s
+ * @returns {string}
+ */
+export function letterOfName(s) {
+    let w = s.split(/\s+/);
+    return (w[1] || w[0])[0]; //ignore first word (Mr. or Mrs.)
+}

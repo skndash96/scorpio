@@ -5,8 +5,8 @@ export async function load({ params }) {
     let id = params.id;
 
     let d = await supabase
-        .from("reports")
-        .select("*, accountable:profiles (*)")
+        .from("profiles")
+        .select("*, accountable:reports (*)")
         .eq("id", id)
         .maybeSingle();
 
@@ -16,11 +16,11 @@ export async function load({ params }) {
         });
     } else if (!d.data) {
         return error(404, {
-            message: "Report not Found"
+            message: "Profile not Found"
         });
     } else {
         return {
-            report: d.data
+            profile: d.data
         };
     }
 
