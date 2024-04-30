@@ -15,7 +15,7 @@
             {/if}
         </div>
 
-        <span style="font-size: 1.1rem; font-weight: 600;">
+        <span style="font-weight: 600;">
             {r.name}
         </span><br />
     </a>

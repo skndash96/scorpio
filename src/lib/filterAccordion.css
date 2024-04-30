@@ -1,0 +1,37 @@
+button.formToggle {
+    display: none;
+    background: none;
+    border: none;
+    margin-bottom: 1rem;
+}
+button.formToggle:hover {
+    background: var(--elevate);
+}
+button.formToggle span:first-child {
+    transition: all 150ms ease-out;
+}
+button.formToggle:has(+ form.open) span:first-child {
+    transform: rotate(180deg) translateY(-.2rem);
+}
+
+@media (max-width: 556px) {
+    button.formToggle {
+        display: block;
+    }
+    
+    .formBox {
+        padding-bottom: 0;
+    }
+    
+    form {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        transition: all 150ms ease-out;
+    }
+
+    form.open {
+        max-height: 100vh;
+        overflow: unset;
+    }
+}

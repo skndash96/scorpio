@@ -5,6 +5,7 @@
     import Search from "$lib/Search.svelte";
     import { cities, departments } from "$lib/report";
     import { preventFormEnter } from "$lib/utils";
+    import "$lib/filterAccordion.css";
 
     let /**@type {number}*/city = -1,
         /**@type {number}*/dept = -1,
@@ -36,12 +37,15 @@
     {#key city + dept}
     <List table="reports" component={Report} city={cities[city]} dept={departments[dept]} />
     {/key}
+
+    <section>
+        Empty section
+    </section>
 </Fixedheight>
 
 <style>    
-    div.formBox {
-        padding: 2rem;
-        padding-bottom: 0;
+    .formBox {
+        padding: 1rem 2rem 0 1rem;
         max-width: 20rem;
     }
 
@@ -60,36 +64,9 @@
         width: 100%;
     }
 
-    button.formToggle {
-        display: none;
-    }
-    button.formToggle span:first-child {
-        transition: all 150ms ease-out;
-    }
-    button.formToggle:has(+ form.open) span:first-child {
-        transform: rotate(180deg) translateY(-.2rem);
-    }
-
-    @media (max-width: 556px) {
-        button.formToggle {
-            display: block;
-            background: none;
-            border: none;
-            margin-bottom: 1rem;
-        }
-        button.formToggle:hover {
-            background: var(--elevate);
-        }
-        
-        form {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 150ms ease-out;
-        }
-
-        form.open {
-            max-height: 100vh;
-            overflow: unset;
-        }
+    section {
+        flex-grow: 1;
+        padding: 1rem;
+        opacity: .5;
     }
 </style>

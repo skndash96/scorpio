@@ -21,7 +21,7 @@
     </div>
 
     <section>
-        <h3> Related reports: </h3>
+        <h4> Related reports: </h4>
     </section>
 </main>
 
