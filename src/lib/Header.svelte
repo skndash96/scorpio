@@ -62,7 +62,7 @@
         justify-content: space-between;
         align-items: stretch;
         padding: 0 1rem;
-        border-bottom: 2px solid var(--elevate);
+        border-bottom: 2px solid var(--elevate-dark);
     }
 
     ul {

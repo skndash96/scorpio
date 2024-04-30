@@ -1,17 +1,16 @@
 <script>
     import { onMount } from "svelte";
     import supabase from "./supabase";
-    import { formatTimestamp } from "./utils";
 
     export let
     /**@type {string|null}*/ city,
     /**@type {string|null}*/ dept;
 
-    /**@type {ReportSchema[]}*/
+    /**@type {ProfileSchema[]}*/
     let data = [];
 
-    /**@type {Promise<ReportSchema[]>}*/
-    let incoming = new Promise(r => r([]));
+    /**@type {Promise<ProfileSchema[]>}*/
+    let incoming = new Promise(() => null);
 
     let offset = 0, step = 20;
 
@@ -33,7 +32,7 @@
     function get() {
         incoming = new Promise(async (res, rej) => {
             let d = supabase
-                .from("reports")
+                .from("profiles")
                 .select();
             
             if (city) d = d.eq("city", city);
@@ -62,51 +61,37 @@
     }
 </script>
 
-<div class="reportBox">    
+<div class="profileBox">    
     {#if data.length === 0}
-    <p> No reports found for the given filter. </p>
+    <p> No profile found for the given filter. </p>
     {/if}
 
     {#each data as r}
-        <div class="report">
-            <a href="/reports/{r.id}">
-                <span style="font-size: 1.1rem; font-weight: 600;">
-                    {r.title}
-                </span><br />
-    
-                <div class="details">    
-                    <span class="time">
-                        {formatTimestamp(r.timestamp)}
-                    </span>
-                    <span class="dept">
-                        {r.dept}
-                    </span>
-                    <span class="city">
-                        {r.city}
-                    </span> 
+        <div class="profile">
+            <a href="/profiles/{r.id}">
+                <div class="image">
                 </div>
-    
-                <p>
-                    {r.info.slice(0, 200)}
-                    {#if r.info.length > 200}
-                        <span class="readmore"> (read more) </span>
-                    {/if}
-                </p>
+
+                <span style="font-size: 1.1rem; font-weight: 600;">
+                    {r.name}
+                </span><br />
             </a>
         </div>
     {/each}
     
     {#await incoming}
-        Loading reports
+        Loading profiles
     {:catch e}
-        Failed to get reports: <small>{e}</small>
+        <p>
+            Failed to get profiles: <small>{e}</small>
+        </p>
     {/await}
 
     <div id="end"></div>
 </div>
 
 <style>
-    .reportBox {
+    .profileBox {
         display: flex;
         flex-direction: column;
         gap: 2rem;
@@ -119,49 +104,9 @@
         border-bottom: none;
     }
     @media (max-width: 556px) {
-        .reportBox {
+        .profileBox {
             width: 100%;
         }
-    }
-    
-    .reportBox .title {
-        font-weight: 500;
-        text-align: center;
-    }
-
-    .report {
-        padding: 1rem;
-        border: 2px solid var(--elevate);
-        background-color: var(--elevate);
-    }
-
-    .report .details {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: .5rem;
-    }
-    .report .details > * {
-        padding: 0 .5rem;
-        border-right: 2px solid var(--primary);
-        font-size: .9rem;
-        opacity: .9;
-    }
-    .report .details > *:last-child {
-        border-right: none;
-    }
-
-    .report a {
-        text-decoration: none;
-    }
-
-    .report p {
-        margin-top: 0.5rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--elevate);
-    }
-
-    .report .readmore {
-        opacity: 0.6;
     }
 
     #end {
@@ -170,7 +115,7 @@
         bottom: 0;
     }
 
-    .reportBox::-webkit-scrollbar {
+    .profileBox::-webkit-scrollbar {
         display: none;
         appearance: none;
     }

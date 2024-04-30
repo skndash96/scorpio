@@ -67,7 +67,7 @@
         width: 100%;
     }
     .search ul {
-        height: 10rem;
+        max-height: 8rem;
         overflow-y: auto;
         background: var(--elevate);
     }

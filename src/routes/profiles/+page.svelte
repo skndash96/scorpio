@@ -1,52 +1,49 @@
 <script>
-    import { cities } from "$lib/report.js";
+    import FixedHeight from "$lib/FixedHeight.svelte";
+import List from "$lib/List.svelte";
+    import Profile from "$lib/Profile.svelte";
+    import { cities, departments } from "$lib/report.js";
     import Search from "$lib/Search.svelte";
 
-    let
-    /**@type {string}*/ name,
-    city = -1;
+    let /**@type {string}*/ name,
+        city = -1,
+        dept = -1;
 </script>
 
-<main>
+<FixedHeight id="profileList">
     <form>
-        <h3> Search for an Official </h3>
+        <h3>Search for an Official</h3>
 
         <fieldset>
             <label for="name"> Name: </label>
-            <input name="name" bind:value={name} type="text" placeholder="name of the official" />
+            <input
+                name="name"
+                bind:value={name}
+                type="text"
+                placeholder="name of the official"
+            />
         </fieldset>
 
+        <Search label="Department" data={departments} bind:value={dept} />
         <Search label="City" data={cities} bind:value={city} />
-        
-        <button type="submit">
-            Search
-        </button>
+
+        <button type="submit"> Search </button>
     </form>
 
-    <section>
-        <h3> High Rated Officials </h3>
-        <p> TODO </p>
-    </section>
-</main>
+    {#key city+dept}
+        <List table="profiles" component={Profile} bind:city={cities[city]} bind:dept={departments[dept]} />
+    {/key}
+</FixedHeight>
 
 <style>
-    main {
-        display: flex;
-    }
-    
-    main > * {
-        padding: 1rem;
-    }
-
     form {
         max-width: 20rem;
-        border-right: 2px solid var(--elevate-dark);
+        padding: 1rem;
+        padding-right: 2rem;
+        overflow: auto;
     }
 
-    @media (max-width: 628px) {
-        main {
-            flex-direction: column;
-        }
+    @media (max-width: 556px) {
         form {
             width: fit-content;
             margin: 0 auto;
@@ -55,13 +52,13 @@
     }
 
     form h3 {
-        margin: 2rem 0;
+        margin: 1rem 0;
         text-align: center;
     }
 
     form label {
-        opacity: .9;
-        margin-bottom: .5rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
     }
 
     form > fieldset {
@@ -76,9 +73,5 @@
     form button[type="submit"] {
         margin: 1rem auto;
         display: block;
-    }
-
-    section {
-        opacity: .4;
     }
 </style>

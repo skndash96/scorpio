@@ -27,6 +27,8 @@
  * @property {string} created_at date timestamp
  * @property {string} name
  * @property {string|null} image url
+ * @property {string} dept
+ * @property {string} city
  */
 
 /**
