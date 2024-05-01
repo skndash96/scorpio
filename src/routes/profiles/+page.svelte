@@ -7,7 +7,7 @@
     import { preventFormEnter } from "$lib/utils";
     import "$lib/filterAccordion.css";
 
-    let /**@type {string}*/ name,
+    let /**@type {string}*/ words = "",
         city = -1,
         dept = -1,
         formOpen = false;
@@ -25,11 +25,10 @@
                 <label for="name"> Name: </label>
                 <input
                 name="name"
-                bind:value={name}
+                bind:value={words}
                 type="text"
                 placeholder="name of the official"
                 on:keydown={preventFormEnter}
-                disabled
                 />
             </fieldset>
             
@@ -38,9 +37,7 @@
         </form>
     </div>
         
-    {#key city+dept}
-        <List table="profiles" component={Profile} bind:city={cities[city]} bind:dept={departments[dept]} />
-    {/key}
+    <List table="profiles" component={Profile} bind:words bind:city={cities[city]} bind:dept={departments[dept]} />
 </FixedHeight>
 
 <style>

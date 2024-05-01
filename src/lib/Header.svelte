@@ -65,6 +65,10 @@
         border-bottom: 2px solid var(--elevate-dark);
     }
 
+    .brand {
+        transform: translateY(.2rem);
+    }
+
     ul {
         display: flex;
         flex-direction: row;

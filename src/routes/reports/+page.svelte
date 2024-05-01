@@ -9,7 +9,7 @@
 
     let /**@type {number}*/city = -1,
         /**@type {number}*/dept = -1,
-        /**@type {string}*/txt = "";
+        /**@type {string}*/words = "";
     
     let formOpen = false;
 </script>
@@ -26,7 +26,7 @@
             <label for="words">
                 Words:
             </label>
-            <input name="words" bind:value={txt} type="text" placeholder="Look for words" on:keydown={preventFormEnter} disabled/>
+            <input name="words" bind:value={words} type="text" placeholder="Look for words" on:keydown={preventFormEnter} />
         </fieldset>
         
         <Search label="Department" data={departments} bind:value={dept} />
@@ -34,10 +34,8 @@
     </form>
     </div>
     
-    {#key city + dept}
-    <List table="reports" component={Report} city={cities[city]} dept={departments[dept]} />
-    {/key}
-
+    <List table="reports" component={Report} bind:words bind:city={cities[city]} bind:dept={departments[dept]} />
+    
     <section>
         Empty section
     </section>
@@ -68,5 +66,10 @@
         flex-grow: 1;
         padding: 1rem;
         opacity: .5;
+    }
+    @media (max-width: 928px) {
+        section {
+            display: none;
+        }
     }
 </style>

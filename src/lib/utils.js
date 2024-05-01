@@ -14,7 +14,12 @@ export function formatTimestamp(t) {
  * @param {KeyboardEvent} e 
  */
 export function preventFormEnter(e) {
-    if (e.key === "Enter") e.preventDefault();
+    if (e.key === "Enter") {
+        e.preventDefault();
+
+        //@ts-ignore
+        e.target?.blur?.();
+    }
 }
 
 /**

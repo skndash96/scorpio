@@ -8,18 +8,18 @@
 </main>
 
 <style>
-    main {
+    main.fixed {
         position: relative;
         display: flex;
         align-items: stretch;
         overflow: auto;
     }
     
-    :global(#wrapper) {
+    :global(#wrapper:has(main.fixed)) {
         height: 100vh;
         height: 100dvh;
     }
-    :global(footer) {
+    :global(main.fixed + footer) {
         display: none;
     }
 
@@ -39,7 +39,7 @@
             border: none !important;
         }
         
-        :global(#wrapper) {
+        :global(#wrapper:has(main.fixed)) {
             height: unset;
         }
     }
