@@ -36,6 +36,7 @@
             data = []; //replace data
             offset = 0;
             await get();
+            offset += step;
             timeout = null;
         }, 500);
     }
@@ -98,17 +99,18 @@
         {/each}
     {/key}
 
-    {#await incoming}
-        <Loading label={table} />
-    {:then}
-        {#if data.length === 0 }
-            <p> No {table} found for the given filter </p>
-        {/if}
-    {:catch e}
-        Failed to get {table}: <small>{e}</small>
-    {/await}
-
-    <div id="end"></div>
+    
+    <div id="end">
+        {#await incoming}
+            <Loading label={table} />
+        {:then}
+            {#if data.length === 0 }
+                <p> No {table} found for the given filter </p>
+            {/if}
+        {:catch e}
+            Failed to get {table}: <small>{e}</small>
+        {/await}
+    </div>
 </div>
 
 <style>

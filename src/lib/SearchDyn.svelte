@@ -1,4 +1,5 @@
 <script>
+    import { browser } from "$app/environment";
     import Loading from "$lib/Loading.svelte";
     import SearchInput from "$lib/SearchInput.svelte";
     import "$lib/searchList.css";
