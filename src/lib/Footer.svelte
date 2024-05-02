@@ -1,6 +1,6 @@
 <footer>
-    <p> Version 1.0 -- Made with 💘 </p>
-    <p> Icons by <a href="https://icons8.com">icons8</a> </p>
+    <p> Version 1.0 -- Made with 💘 by <a href="https://github.com/skndash96" target="_blank"> skndash </a> </p>
+    <p> Icons by <a target="_blank" href="https://icons8.com">icons8</a> and <a target="_blank" href="https://fontawesome.com"> fontawesome </a> </p>
 </footer>
 
 <style>

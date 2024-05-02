@@ -16,7 +16,7 @@
 
         tm = setTimeout(() => {
             query = val;
-        }, 1000);
+        }, 500);
     }
 
     /**
