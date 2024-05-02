@@ -31,8 +31,8 @@
     }
 
     @media (max-width: 556px) {
-        main {
-            display: initial;
+        main.fixed {
+            display: block;
         }
 
         :global(main.fixed > *) {
