@@ -4,6 +4,12 @@
     import Header from "../lib/Header.svelte";
 </script>
 
+<svelte:head>
+    <meta name="title" content="Scorpio | Empowering Citizens " />
+    <meta name="description" content="Empower citizens to voice their experiences with government officials. Rate and report on the performance of elected representatives, fostering accountability and transparency in governance" />
+    <meta name="image" content="favicon.png" />
+</svelte:head>
+
 <div id="wrapper">
     <Header />
     <slot />

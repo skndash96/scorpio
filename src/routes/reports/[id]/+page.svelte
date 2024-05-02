@@ -19,6 +19,11 @@
     }
 </script>
 
+<svelte:head>
+    <title> Scorpio | Report </title>
+</svelte:head>
+
+
 <main>
     <h3 class="title"> {report.title} </h3>
     <span class="timestamp"> {formatTimestamp(report.timestamp)} </span> <br />

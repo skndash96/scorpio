@@ -5,6 +5,11 @@
     let p = data.profile;
 </script>
 
+<svelte:head>
+    <title> Scorpio | Profile </title>
+</svelte:head>
+
+
 <main>
     <div class="box">
         <div class="image">

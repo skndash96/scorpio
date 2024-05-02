@@ -13,6 +13,11 @@
         formOpen = false;
 </script>
 
+<svelte:head>
+    <title> Scorpio | Search Officials of the World </title>
+</svelte:head>
+
+
 <FixedHeight id="profileList">
     <div class="formBox">
         <button class="formToggle icon" on:click={() => (formOpen = !formOpen)}>

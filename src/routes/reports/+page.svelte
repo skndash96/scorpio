@@ -14,6 +14,10 @@
     let formOpen = false;
 </script>
 
+<svelte:head>
+    <title> Scorpio | Search Reports from the World </title>
+</svelte:head>
+
 <Fixedheight id="reportList">
     <div class="formBox">
     <button class="formToggle icon" on:click={() => (formOpen = !formOpen)}>

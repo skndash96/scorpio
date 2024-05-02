@@ -68,6 +68,10 @@
     }
 </script>
 
+<svelte:head>
+    <title> Scorpio | Write a Report </title>
+</svelte:head>
+
 <main>
     <form on:submit|preventDefault={addPost}>
         <div class="title">
