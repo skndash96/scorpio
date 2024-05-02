@@ -61,12 +61,12 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: stretch;
-        padding: 0 1rem;
+        padding: 0 1.5rem;
         border-bottom: 2px solid var(--elevate-dark);
     }
 
     .brand {
-        transform: translateY(.2rem);
+        transform: translateY(.1rem);
     }
 
     ul {

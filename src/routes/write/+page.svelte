@@ -183,7 +183,6 @@
 
     fieldset input,
     fieldset textarea {
-        margin-left: 1rem;
         font-size: 0.9rem;
     }
 

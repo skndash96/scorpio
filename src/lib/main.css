@@ -66,6 +66,7 @@ input, textarea, select {
     padding: .5rem;
     border-bottom: 2px solid transparent;
     transition: border 150ms ease-out;
+    width: 100%;
 }
 input:focus, textarea:focus {
     border-color: var(--primary);

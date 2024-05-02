@@ -19,10 +19,12 @@
     border: none;
     border-bottom: 1px solid var(--elevate);
     background-color: transparent;
-    .search li:first-child {
-        border-top: 1px solid var(--elevate);
-    }
-    .search li:hover button {
-        background: var(--elevate);
-    }
+}
+
+.search input:not(:focus) {
+    border-color: var(--elevate-dark);
+}
+
+.search li:hover button {
+    background: var(--elevate);
 }
