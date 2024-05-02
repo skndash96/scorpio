@@ -1,0 +1,28 @@
+.search {
+    position: relative;
+    width: 100%;
+}
+
+.search ul {
+    max-height: 10rem;
+    overflow-y: auto;
+    background: var(--elevate);
+}
+
+.search button.remove span {
+    color: crimson;
+}
+
+.search li button {
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-bottom: 1px solid var(--elevate);
+    background-color: transparent;
+    .search li:first-child {
+        border-top: 1px solid var(--elevate);
+    }
+    .search li:hover button {
+        background: var(--elevate);
+    }
+}

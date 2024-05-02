@@ -3,13 +3,39 @@
     import { cities, departments } from "$lib/report.js";
     import Search from "../../lib/Search.svelte";
     import { preventFormEnter } from "$lib/utils";
+    import Loading from "$lib/Loading.svelte";
+    import SearchDyn from "$lib/SearchDyn.svelte";
 
     let /**@type {string}*/ title,
         /**@type {string}*/ info,
         /**@type {string}*/ date,
         /**@type {number} index of selected city*/ city = -1,
         /**@type {number} index of selected dept*/ dept = -1,
+        /**@type {ProfileSchema|null}*/ pf = null,
         /**@type {Promise<any>|null}*/ add_stat;
+
+    /**
+     * @param {string} q
+     * @returns {Promise<ProfileSchema[]>}
+     */
+    function get(q) {
+        q = q.trim();
+
+        return new Promise(async (res, rej) => {
+            if (!q) return res([]);
+
+            let d = await supabase
+                .from("profiles")
+                .select()
+                .ilike("name", `%${q}%`)
+                .limit(15);
+            
+            console.log(d);
+            
+            if (d.error) rej(d.error);
+            else res(d.data);
+        });
+    }
 
     function addPost() {
         add_stat = new Promise(async (res, rej) => {
@@ -29,7 +55,7 @@
                     city: cities[city],
                     title,
                     info, //TODO: sanitize input
-                    accountable: null,
+                    accountable: pf?.id || null,
                 };
 
                 let d = await supabase.from("reports").insert(r);
@@ -87,12 +113,16 @@
             ></textarea>
         </fieldset>
 
+        <div class="pfBox">
+            <SearchDyn label="Accountable person" bind:value={pf} {get} />
+        </div>
+
         <button type="submit"> Submit Report </button>
 
         <p class="stat">
             {#if add_stat}
                 {#await add_stat}
-                    bribing...
+                    <Loading />
                 {:then m}
                     {m}
                 {:catch e}
@@ -170,5 +200,9 @@
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
         cursor: pointer;
+    }
+
+    div.pfBox {
+        margin-top: 1rem;
     }
 </style>

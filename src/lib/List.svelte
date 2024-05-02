@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import supabase from "./supabase";
     import { browser } from "$app/environment";
+    import Loading from "./Loading.svelte";
 
     export let /**@type {"profiles"|"reports"}*/ table,
         /**@type {string|null}*/ city,
@@ -36,7 +37,7 @@
             offset = 0;
             await get();
             timeout = null;
-        }, 1000);
+        }, 500);
     }
 
     onMount(() => {
@@ -98,14 +99,7 @@
     {/key}
 
     {#await incoming}
-        <p class="icon">
-            <span class="spin">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/></svg>
-            </span>
-            <span>
-                Loading {table}
-            </span>
-        </p>
+        <Loading label={table} />
     {:then}
         {#if data.length === 0 }
             <p> No {table} found for the given filter </p>
@@ -145,18 +139,5 @@
     .box::-webkit-scrollbar {
         display: none;
         appearance: none;
-    }
-
-    .spin {
-        display: inline-block;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        from {
-            transform: translateY(.2rem) rotate(0deg);
-        } to {
-            transform: translateY(.2rem) rotate(360deg);
-        }
     }
 </style>
