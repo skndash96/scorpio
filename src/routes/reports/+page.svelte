@@ -72,10 +72,6 @@
         margin-bottom: 0.5rem;
     }
 
-    form input {
-        width: 100%;
-    }
-
     section {
         flex-grow: 1;
         padding: 1rem;

@@ -21,7 +21,7 @@
     background-color: transparent;
 }
 
-.search input:not(:hover) {
+.search input:not(:focus) {
     border-color: var(--elevate-dark);
 }
 
