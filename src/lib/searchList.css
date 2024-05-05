@@ -4,7 +4,7 @@
 }
 
 .search ul {
-    max-height: 10rem;
+    height: 10rem;
     overflow-y: auto;
     background: var(--elevate);
 }
