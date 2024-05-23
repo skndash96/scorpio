@@ -36,8 +36,8 @@
         {#await data}
             <Loading {label} />
         {:then data}
-            {#if data.length === 0}
-                <li> No {label} found </li>
+            {#if query && data.length === 0}
+                <li class="show" style="font-size: .8rem; padding: .5rem;"> No {label} found </li>
             {/if}
 
             {#each data as item}

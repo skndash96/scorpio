@@ -7,6 +7,10 @@
     let r = data.report;
 </script>
 
+<svelte:head>
+    <title> Scorpio | View Report </title>
+</svelte:head>
+
 <main>
     <Report {r} hyperlink={false} />
 </main>

@@ -1,3 +1,7 @@
+<svelte:head>
+    <title> Scorpio | Homepage </title>
+</svelte:head>
+
 <main>
     <div class="hero">
         <div class="image">

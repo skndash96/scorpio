@@ -15,7 +15,7 @@ fieldset.search li button {
     width: 100%;
     text-align: left;
     border: none;
-    border-bottom: 1px solid var(--elevate);
+    border-bottom: 1px solid var(--elevate-dark);
     background-color: transparent;
     color:  var(--text)
 }

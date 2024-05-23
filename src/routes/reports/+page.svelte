@@ -48,8 +48,8 @@
 <style>
     #filters {
         padding: 1rem 2rem 0 1rem;
-        max-width: 20rem;
         overflow: auto;
+        width: 20rem;
     }
 
     form {

@@ -38,12 +38,16 @@
     </div>
         
     <List table="profiles" component={Profile} bind:words bind:city={city} bind:dept={dept} />
+
+    <section id="trending">
+        Empty Section
+    </section>
 </FixedHeight>
 
 <style>
     #filters {
         padding: 1rem 2rem 0 1rem;
-        max-width: 20rem;
+        width: 20rem;
         overflow: auto;
     }
 
@@ -69,5 +73,11 @@
     form > fieldset {
         display: flex;
         flex-direction: column;
+    }
+
+    #trending {
+        flex-grow: 1;
+        padding: 1rem;
+        opacity: .5;
     }
 </style>

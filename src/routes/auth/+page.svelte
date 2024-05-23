@@ -57,6 +57,9 @@
     }
 </script>
 
+<svelte:head>
+    <title> Scorpio | Account </title>
+</svelte:head>
 
 <main>
     <form on:submit|preventDefault>
