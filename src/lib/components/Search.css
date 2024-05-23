@@ -1,30 +1,25 @@
-.search {
-    position: relative;
-    width: 100%;
-}
-
-.search ul {
+fieldset.search ul {
     height: 10rem;
     overflow-y: auto;
     background: var(--elevate);
 }
 
-.search button.remove span {
-    color: crimson;
+fieldset.search li {
+    display: none;
+}
+fieldset.search li.show {
+    display: block;
 }
 
-.search li button {
+fieldset.search li button {
     width: 100%;
     text-align: left;
     border: none;
     border-bottom: 1px solid var(--elevate);
     background-color: transparent;
+    color:  var(--text)
 }
 
-.search input:not(:focus) {
-    border-color: var(--elevate-dark);
-}
-
-.search li:hover button {
+fieldset.search li:hover button {
     background: var(--elevate);
 }

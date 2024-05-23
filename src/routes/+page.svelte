@@ -1,7 +1,3 @@
-<script>
-    
-</script>
-
 <main>
     <div class="hero">
         <div class="image">

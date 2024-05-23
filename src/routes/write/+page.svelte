@@ -1,24 +1,50 @@
 <script>
+    import { cities, departments, showToast } from "$lib/utils";
+    import SearchStatic from "$lib/components/SearchStatic.svelte";
+    import SearchAsync from "$lib/components/SearchAsync.svelte";
     import supabase from "$lib/supabase";
-    import { cities, departments } from "$lib/report.js";
-    import Search from "../../lib/Search.svelte";
-    import { preventFormEnter } from "$lib/utils";
-    import Loading from "$lib/Loading.svelte";
-    import SearchDyn from "$lib/SearchDyn.svelte";
 
     let /**@type {string}*/ title,
         /**@type {string}*/ info,
         /**@type {string}*/ date,
-        /**@type {number} index of selected city*/ city = -1,
-        /**@type {number} index of selected dept*/ dept = -1,
-        /**@type {ProfileSchema|null}*/ pf = null,
-        /**@type {Promise<any>|null}*/ add_stat;
+        /**@type {string|null}*/ city = null,
+        /**@type {string|null}*/ dept = null,
+        /**@type {ProfileSchema|null}*/ pf = null;
+
+    async function addPost() {
+        if (dept) dept = dept.trim();
+        if (city) city = city.trim();
+
+        if (!(title && dept && city && date && info)) {
+            showToast("Please fill all required inputs");
+        } else if (info.length < 200 || info.length > 4000) {
+            showToast("Description has to be between 200 and 4000 charecters long");
+        } else if (title.length < 20 || title.length > 200) {
+            showToast("Title has to be between 20 and 200 charecters long");
+        } else {
+            /**@type {AddReport}*/
+            let r = {
+                timestamp: new Date(date),
+                dept: dept,
+                city: city,
+                title,
+                info, //TODO: sanitize input
+                accountable: pf?.id || null,
+            };
+
+            let d = await supabase.from("reports").insert(r);
+
+            d.error
+                ? [console.error(d.error), showToast("Failed to submit report")]
+                : showToast("Report submitted. Thank you.", "good");
+        }
+    }
 
     /**
      * @param {string} q
      * @returns {Promise<ProfileSchema[]>}
      */
-    function get(q) {
+    function getProfiles(q = "") {
         q = q.trim();
 
         return new Promise(async (res, rej) => {
@@ -29,59 +55,33 @@
                 .select()
                 .ilike("name", `%${q}%`)
                 .limit(15);
-            
-            console.log(d);
-            
+
+            console.log("Matches:", d);
+
             if (d.error) rej(d.error);
             else res(d.data);
-        });
-    }
-
-    function addPost() {
-        add_stat = new Promise(async (res, rej) => {
-            if (!(title && dept >= 0 && city >= 0 && date && info)) {
-                rej("Please fill all of the above input");
-            } else if (info.length < 200 || info.length > 4000) {
-                rej(
-                    "Description has to be between 200 and 4000 charecters long",
-                );
-            } else if (title.length < 20 || title.length > 200) {
-                rej("Title has to be between 20 and 200 charecters long");
-            } else {
-                /**@type {AddReport}*/
-                let r = {
-                    timestamp: new Date(date),
-                    dept: departments[dept],
-                    city: cities[city],
-                    title,
-                    info, //TODO: sanitize input
-                    accountable: pf?.id || null,
-                };
-
-                let d = await supabase.from("reports").insert(r);
-
-                d.error
-                    ? [console.error(d.error), rej("Failed to submit report")]
-                    : res("Report submitted. Thank you.");
-            }
         });
     }
 </script>
 
 <svelte:head>
-    <title> Scorpio | Write a Report </title>
+    <title>Scorpio | Write a Report</title>
 </svelte:head>
 
 <main>
-    <form on:submit|preventDefault={addPost}>
+    <form on:submit|preventDefault>
         <div class="title">
             <img src="/write.png" alt="write" width="30" height="30" />
             <h4>Write a Report</h4>
         </div>
 
         <div class="grid-2">
-            <Search label="Department" data={departments} bind:value={dept} />
-            <Search label="City" data={cities} bind:value={city} />
+            <SearchStatic
+                label="Department"
+                data={departments}
+                bind:value={dept}
+            />
+            <SearchStatic label="City" data={cities} bind:value={city} />
         </div>
 
         <fieldset>
@@ -91,7 +91,6 @@
                 bind:value={date}
                 type="date"
                 placeholder="Date"
-                on:keydown={preventFormEnter}
             />
         </fieldset>
 
@@ -102,7 +101,6 @@
                 type="text"
                 placeholder="write a suitable title"
                 bind:value={title}
-                on:keydown={preventFormEnter}
             />
         </fieldset>
 
@@ -118,22 +116,15 @@
         </fieldset>
 
         <div class="pfBox">
-            <SearchDyn label="Accountable person" bind:value={pf} {get} />
+            <SearchAsync
+                label="Accountable person"
+                getData={getProfiles}
+                bind:value={pf}
+            />
+            <small style="opacity: .7"> (optional) </small>
         </div>
 
-        <button type="submit"> Submit Report </button>
-
-        <p class="stat">
-            {#if add_stat}
-                {#await add_stat}
-                    <Loading />
-                {:then m}
-                    {m}
-                {:catch e}
-                    {e.message || e}
-                {/await}
-            {/if}
-        </p>
+        <button type="submit" on:click={addPost}> Submit Report </button>
     </form>
 </main>
 
@@ -166,7 +157,7 @@
             grid-template-columns: 1fr;
         }
     }
-    
+
     .title {
         flex-direction: row;
         align-items: center;
@@ -189,13 +180,6 @@
     form button[type="submit"] {
         margin: 0 auto;
         margin-top: 1rem;
-    }
-
-    form p.stat {
-        max-width: 20rem;
-        width: fit-content;
-        margin: 1rem auto;
-        text-align: center;
     }
 
     input[type="date"] {

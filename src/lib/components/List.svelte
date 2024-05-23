@@ -1,16 +1,14 @@
 <script>
     import { onMount } from "svelte";
-    import supabase from "./supabase";
     import { browser } from "$app/environment";
     import Loading from "./Loading.svelte";
+    import supabase from "$lib/supabase";
 
     export let /**@type {"profiles"|"reports"}*/ table,
         /**@type {string|null}*/ city,
         /**@type {string|null}*/ dept,
         /**@type {string}*/ words,
         component;
-
-    words = words.trim();
 
     /**@type {any[]}*/
     let data = [];
@@ -21,34 +19,29 @@
     let offset = 0,
         step = 20;
 
-    /**@type {any} NodeJS.timeout | null | 0*/
-    let timeout = 0;
-
+    //CONFLICT, when filter applied get() is called. this also triggers intersection observer for end of page. How to fix?
+    //Problem: get() called twice
+    //Fix: 
     $: {
         [words, city, dept];
         browser && T();
     }
 
-    function T() {
-        if (timeout) clearTimeout(timeout);
+    async function T() {
+        observeEnd = false;
 
-        timeout = setTimeout(async () => {
-            data = []; //replace data
-            offset = 0;
-            await get();
-            offset += step;
-            timeout = null;
-        }, 500);
+        data = []; //replace data
+        offset = 0;
+        await get();
+
+        observeEnd = true;
     }
+
+    let observeEnd = false;
 
     onMount(() => {
         let observer = new IntersectionObserver(([el]) => {
-            if (!el.isIntersecting) return;
-
-            if (timeout === null) {
-                get();
-                offset += step;
-            }
+            if (observeEnd && el.isIntersecting) get()
         });
 
         observer.observe(
@@ -69,13 +62,13 @@
                     d = d.ilike("name", "%"+words+"%");
                 } else if (table === "reports") {
                     let q = words.split(/\s+/).filter(Boolean).map(w => `'${w}'`).join(" | "); //PGSQL any word search
-                    d = d.textSearch("title", q);
+                    d = d.textSearch("title", q); //TODO: Search in description
                 }
             }
 
             let q = await d.range(offset, offset + step);
 
-            console.log("Response:", q);
+            console.log(table, q);
 
             if (q.error) rej(q.error.message);
             else if (q.data.length === 0) res([]);
@@ -85,20 +78,22 @@
         incoming
             .then((records) => {
                 data = data.concat(records);
+                offset += step;
             })
             .catch((e) => {
                 console.error(e);
             });
+        
+        return incoming;
     }
 </script>
 
 <div class="box">
-    {#key [words, city, dept]}
-        {#each data as r}
+    {#each data as r}
+        <a href="{table}/{r.id}"> <!-- makesure this link works -->
             <svelte:component this={component} {r} />
-        {/each}
-    {/key}
-
+        </a>
+    {/each}
     
     <div id="end">
         {#await incoming}
@@ -123,7 +118,11 @@
         padding-bottom: 0;
         width: 40rem;
         height: 100%;
-        overflow-y: auto;
+        overflow: auto;
+    }
+
+    .box a {
+        text-decoration: none;
     }
 
     @media (max-width: 556px) {

@@ -5,6 +5,7 @@ html {
     --txt: #121212;
     --elevate: #00000011;
     --elevate-dark: #00000033;
+    --elevate-solid: #292929;
 
     --primary: #ae47db;
     --secondary: #812ca5;
@@ -39,6 +40,8 @@ html {
 
 body {
     background-color: var(--bg);
+    width: 100vw;
+    overflow-x: hidden;
 }
 
 .icon span:has(> svg) {
