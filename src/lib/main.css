@@ -40,8 +40,6 @@ html, html.light {
 
 body {
     background-color: var(--bg);
-    width: 100vw;
-    overflow-x: hidden;
 }
 
 .icon span:has(> svg) {
@@ -58,10 +56,6 @@ body {
 }
 svg {
     fill: currentColor;
-}
-
-a:hover {
-    text-decoration: underline;
 }
 
 input, textarea, select {

@@ -1,73 +1,46 @@
 <script>
-    import { formatTimestamp, letterOfName } from "$lib/utils.js";
+    import Profile from "$lib/components/Profile.svelte";
+    import Report from "$lib/components/Report.svelte";
 
     export let data;
 
     /**@type {ProfileSchema}*/
-    let p = data.profile;
+    let pf = data.profile;
 </script>
 
 <svelte:head>
-    <title>Scorpio | {p.name}</title>
+    <title>Scorpio | {pf.name}</title>
 </svelte:head>
 
 <main>
-    <div class="box">
-        <div class="image">
-            {#if p.image}
-                <img src={p.image} alt={p.name} width="150" height="150" />
-            {:else}
-                <span>{letterOfName(p.name)}</span>
-            {/if}
-        </div>
-
-        <div class="info">
-            <h2 class="name">{p.name}</h2>
-            
-            <small class="created">
-                Created on: {formatTimestamp(p.created_at)}
-            </small>
-        </div>
-    </div>
-
-    <section>
+    <Profile data={pf} />
+    
+    <section id="related">
         <h4>Related reports:</h4>
+
+        <ul>
+            {#each pf.accountable as report}
+                <li>
+                    <a href="/reports/{report.id}">
+                        <Report data={report} showMin elevate />
+                    </a>
+                </li>
+            {/each}
+        </ul>
     </section>
 </main>
 
 <style>
     main {
-        padding: 1rem;
+        padding: 2rem 1rem;
     }
 
-    .box {
-        display: flex;
-        gap: 1rem;
-    }
-    .image {
-        background: var(--elevate-dark);
-        border-radius: 100%;
-        overflow: hidden;
-        width: 4rem;
-        height: 4rem;
-        display: grid;
-        place-items: center;
-    }
-    .image img {
-        width: 100%;
-        height: 100%;
-    }
-
-    .info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    small.created {
-        opacity: 0.9;
-    }
-
-    section {
+    #related {
         margin-top: 2rem;
+        width: fit-content;
+    }
+
+    #related li {
+        margin-top: 1rem;
     }
 </style>

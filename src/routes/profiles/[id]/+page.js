@@ -6,7 +6,7 @@ export async function load({ params }) {
 
     let d = await supabase
         .from("profiles")
-        .select("*, accountable:reports (*)")
+        .select("*, accountable:reports (*, accountable:profiles(*))")
         .eq("id", id)
         .maybeSingle();
 

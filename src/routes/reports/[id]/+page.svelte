@@ -12,7 +12,7 @@
 </svelte:head>
 
 <main>
-    <Report {r} hyperlink={false} />
+    <Report data={r} />
 </main>
 
 <style>

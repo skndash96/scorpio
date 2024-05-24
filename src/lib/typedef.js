@@ -6,7 +6,7 @@
  * @property {string} info
  * @property {string} city
  * @property {string} dept
- * @property {ProfileSchema} accountable //INNER JOIN from Profiles table
+ * @property {ProfileSchema} accountable //make sure while querying you INNER JOIN from Profiles table
  */
 
 /**
@@ -29,10 +29,15 @@
  * @property {string|null} image url
  * @property {string} dept
  * @property {string} city
+ * @property {ReportSchema[]} accountable
+ * @property {number} integrity
+ * @property {number} totalRatings
  */
 
 /**
  * @typedef {object} AddProfile
  * @property {string} name
  * @property {string|null} image url
+ * @property {string} dept
+ * @property {string} city
  */

@@ -89,9 +89,9 @@
 </script>
 
 <div class="box">
-    {#each data as r}
-        <a href="{table}/{r.id}"> <!-- makesure this link works -->
-            <svelte:component this={component} {r} />
+    {#each data as record}
+        <a href="{table}/{record.id}"> <!-- makesure this link works -->
+            <svelte:component this={component} data={record} showMin elevate />
         </a>
     {/each}
     
@@ -119,10 +119,6 @@
         width: 40rem;
         height: 100%;
         overflow: auto;
-    }
-
-    .box a {
-        text-decoration: none;
     }
 
     @media (max-width: 556px) {

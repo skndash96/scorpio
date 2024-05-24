@@ -119,8 +119,4 @@
             display: none;
         }
     }
-
-    a {
-        text-decoration: none;
-    }
 </style>

@@ -2,9 +2,12 @@
     import { formatTimestamp } from "$lib/utils";
     import Profile from "$lib/components/Profile.svelte";
 
-    export let /**@type {ReportSchema}*/ r,
-        /**@type {boolean}*/ hyperlink = true;
+    export let /**@type {ReportSchema}*/ data,
+        /**@type {boolean}*/ showMin = false,
+        /**@type {boolean}*/ elevate = false;
 
+    let r = data;
+    
     /**
      * @param {string} s
      * @returns {string}
@@ -18,12 +21,8 @@
     }
 </script>
 
-<div class="report" class:hyperlink>
-    {#if hyperlink}
-        <span style="font-size: 1.1rem; font-weight: 600;"> {r.title} </span>
-    {:else}
-        <h3 style="font-size: 600;"> {r.title} </h3>
-    {/if}
+<div class="report" class:elevate={elevate}>
+    <span style="font-size: 1.2rem; font-weight: 600;"> {r.title} </span>
 
     <div class="details">
         <span> {formatTimestamp(r.timestamp)} </span>
@@ -32,7 +31,7 @@
     </div>
 
     <p>
-        {#if hyperlink}
+        {#if showMin}
             {r.info.slice(0, 200)}
             {#if r.info.length > 200}
                 <small style="opacity: .7;"> (read more) </small>
@@ -43,15 +42,13 @@
         {/if}
     </p>
 
-    {#if !hyperlink}
-        {#if r.accountable}
-            <p>
-                <span>Accountable person:</span>
-                <a href="profiles/{r.accountable.id}">
-                    <Profile pf={r.accountable} compact={true} />
-                </a>
-            </p>
-        {/if}
+    {#if !showMin && r.accountable}
+        <p>
+            <span>Accountable person:</span>
+            <a href="profiles/{r.accountable.id}">
+                <Profile data={r.accountable} showMin elevate />
+            </a>
+        </p>
     {/if}
 </div>
 
@@ -62,12 +59,12 @@
         margin: 0 auto;
     }
 
-    .report.hyperlink {
+    .report.elevate {
         border: 2px solid var(--elevate);
         background-color: var(--elevate);
     }
 
-    .report.hyperlink .details {
+    .report .details {
         display: flex;
         flex-wrap: wrap;
         margin-top: 0.5rem;
@@ -75,7 +72,7 @@
 
     .report .details > * {
         padding: 0 0.5rem;
-        border-right: 2px solid var(--primary);
+        border-right: 2px solid var(--txt);
         font-size: 0.9rem;
         opacity: 0.9;
     }
