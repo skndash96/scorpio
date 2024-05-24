@@ -1,11 +1,12 @@
 <script>
     import { browser } from "$app/environment";
-    import HeaderAccountMenu from "$lib/components/HeaderAccountMenu.svelte";
+    import userStore from "$lib/userStore";
 
-    /**@type {import("@supabase/supabase-js").User | undefined}*/
-    export let user;
+    /**@type {import("@supabase/supabase-js").User | null}*/
+    let user;
+    userStore.subscribe(u => (user = u));
 
-    let isDark = true;
+    let isDark = true, open = false;
     
     if (browser) {
         isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -30,7 +31,11 @@
     </div>
 
     <nav>
-        <ul>
+        <button class="navToggle minimal" on:click={() => (open = !open)}>
+            Menu
+        </button>
+        
+        <ul class:open={open}>
             <li>
                 <a href="/" class="icon">
                     <span>
@@ -61,7 +66,12 @@
             </li>
             <li>
                 {#if user}
-                    <HeaderAccountMenu {user} />
+                    <a href="/account" class="icon">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                        </span>
+                        <span>Account</span>
+                    </a>
                 {:else}
                     <a href="/auth" class="icon">
                         <span>
@@ -92,31 +102,54 @@
     nav ul {
         display: flex;
         flex-direction: row;
-        height: 100%;
         align-items: stretch;
     }
 
-    :global(header nav ul li:last-child > *:first-child) {
-        padding-right: 1rem;
-    }
-
-    nav a {
+    nav li a, .navToggle {
         border-bottom: 2px solid transparent;
         transition: border 150ms ease-in-out;
         padding: 0.5rem;
         display: flex;
         align-items: center;
     }
-    nav a:hover {
+    nav li a:hover, .navToggle:hover {
         border-color: var(--primary);
     }
 
-    nav a span:first-child {
+    nav li a span:first-child {
         margin-right: 0.5rem;
     }
+    
+    nav {
+        position: relative;
+        z-index: 5;
+    }
+
+    .navToggle {
+        color: unset;
+        display: none;
+        font-size: 1rem;
+    }
+
     @media (max-width: 556px) {
-        nav a span:last-child {
-            display: none;
+        .navToggle {
+            display: block;
+        }
+
+        nav ul {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transform: translateY( calc(100% + 2px) );
+            flex-direction: column;
+            background: var(--elevate-solid);
+            max-height: 0;
+            overflow: hidden;
+            transition: all 200ms ease-out;
+        }
+        
+        nav ul.open {
+            max-height: 100vh;
         }
     }
 </style>

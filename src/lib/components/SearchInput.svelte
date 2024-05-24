@@ -61,6 +61,10 @@
         width: 100%;
         border-color: var(--elevate);
     }
+    input:focus {
+        border-color: var(--primary);
+    }
+    
     span {
         position: absolute;
         left: 0.5rem;

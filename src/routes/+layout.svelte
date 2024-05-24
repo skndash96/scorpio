@@ -3,19 +3,20 @@
     import Header from "$lib/components/Header.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import supabase from "$lib/supabase";
-    import { onMount } from "svelte";
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
     import { showToast } from "$lib/utils";
-
-    /**@type {import("@supabase/supabase-js").User | undefined}*/
-    let user;
+    import { browser } from "$app/environment";
+    
+    import userStore from "$lib/userStore";
 
     let suggestSignup = true;
 
-    onMount(() => {
+    if (browser) {
         supabase.auth.onAuthStateChange((event, session) => {
-            user = session?.user;
+            let user = session?.user || null;
+            
+            userStore.set(user);
 
             if (user && $page.url.pathname === "/auth") {
                 showToast("Logged in", "good");
@@ -25,11 +26,11 @@
                 suggestSignup = false;
             }
         });
-    });
+    }
 </script>
 
 <div id="wrapper">
-    <Header {user} />
+    <Header />
     
     <div id="toasts"></div>
 

@@ -80,4 +80,10 @@
         padding: 1rem;
         opacity: .5;
     }
+
+    @media (max-width: 928px) {
+        #trending {
+            display: none;
+        }
+    }
 </style>
