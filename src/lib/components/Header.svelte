@@ -1,7 +1,10 @@
 <script>
     import { browser } from "$app/environment";
+    import userStore from "$lib/userStore";
 
-    export let user;
+    /**@type {import("@supabase/supabase-js").User | null}*/
+    let user;
+    userStore.subscribe(u => (user = u));
 
     let isDark = true, open = false;
     
