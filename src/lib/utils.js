@@ -15,6 +15,13 @@ export function showToast(msg, stat = "bad") {
     });
 }
 
+/**
+ * @param {KeyboardEvent} e
+ */
+export function preventEnter(e) {
+    if (e.key === "Enter") e.preventDefault();
+}
+
 //Source: I paid a bribe .com
 const months = [
     "Jan",

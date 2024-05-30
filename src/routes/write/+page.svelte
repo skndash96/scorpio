@@ -1,5 +1,5 @@
 <script>
-    import { cities, departments, showToast } from "$lib/utils";
+    import { cities, departments, preventEnter, showToast } from "$lib/utils";
     import SearchStatic from "$lib/components/SearchStatic.svelte";
     import SearchAsync from "$lib/components/SearchAsync.svelte";
     import supabase from "$lib/supabase";
@@ -91,6 +91,7 @@
                 bind:value={date}
                 type="date"
                 placeholder="Date"
+                on:keydown={preventEnter}
             />
         </fieldset>
 
@@ -101,6 +102,7 @@
                 type="text"
                 placeholder="write a suitable title"
                 bind:value={title}
+                on:keydown={preventEnter}
             />
         </fieldset>
 
