@@ -9,7 +9,7 @@
     let query = "";
 </script>
 
-<fieldset class="search">
+<fieldset class="searchField">
     <label>
         {label}
 
@@ -20,7 +20,7 @@
         {/if}
     </label>
     
-    <SearchInput {label} bind:query />
+    <SearchInput {label} bind:query fast />
 
     <ul>
         {#each data as item}
@@ -34,6 +34,14 @@
                 </button>
             </li>
         {/each}
+
+        {#if query.trim().length > 2}
+            <li class="show">
+                <button on:click={() => (value = query.trim())}>
+                    {query.trim()}
+                </button>
+            </li>
+        {/if}
     </ul>
 </fieldset>
 

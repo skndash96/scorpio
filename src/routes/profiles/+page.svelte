@@ -45,22 +45,8 @@
 </FixedHeight>
 
 <style>
-    #filters {
-        padding: 1rem 2rem 0 1rem;
-        width: 20rem;
-        overflow: auto;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
     @media (max-width: 556px) {
         form {
-            width: fit-content;
-            margin: 0 auto;
             border: none;
         }
     }

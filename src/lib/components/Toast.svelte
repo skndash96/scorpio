@@ -80,9 +80,9 @@
         opacity: 0;
     } 
 
-    button {
+    .toast button {
         display: block;
-        color: var(--text);
+        color: var(--txt);
         text-decoration: underline;
     }
 </style>

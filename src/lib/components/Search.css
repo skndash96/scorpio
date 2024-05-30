@@ -1,25 +1,45 @@
-fieldset.search ul {
-    height: 10rem;
-    overflow-y: auto;
-    background: var(--elevate);
+.searchField {
+    position: relative;
 }
 
-fieldset.search li {
+.searchField ul {
+    height: 10rem;
+    background: var(--elevate-solid);
+    position: absolute;
+    transform: translateY(100%);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    overflow-y: auto;
+    border: 2px solid var(--primary);
+}
+
+.searchField:has(input:focus) ul, .searchField ul:active {
+    display: block;
+    z-index: 1;
+}
+
+.searchField li {
     display: none;
 }
-fieldset.search li.show {
+.searchField li.show {
     display: block;
 }
 
-fieldset.search li button {
+.searchField label {
+    opacity: .9;
+}
+
+.searchField li button {
     width: 100%;
     text-align: left;
     border: none;
     border-bottom: 1px solid var(--elevate-dark);
     background-color: transparent;
-    color:  var(--text)
+    color:  var(--text);
 }
 
-fieldset.search li:hover button {
+.searchField li:hover button {
     background: var(--elevate);
 }

@@ -19,7 +19,7 @@
     const display = (/** @type {any} */ item) => item.name;
 </script>
 
-<fieldset class="search">
+<fieldset class="searchField">
     <label for={label}>
         {label}
 
@@ -38,6 +38,8 @@
         {:then data}
             {#if query && data.length === 0}
                 <li class="show" style="font-size: .8rem; padding: .5rem;"> No {label} found </li>
+            {:else if !query}
+                <li class="show" style="font-size: .8rem; padding: .5rem; opacity: .4;"> Results: </li>
             {/if}
 
             {#each data as item}

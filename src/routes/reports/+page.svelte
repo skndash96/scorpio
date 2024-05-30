@@ -45,23 +45,12 @@
     </section>
 </FixedHeight>
 
-<style>
-    #filters {
-        padding: 1rem 2rem 0 1rem;
-        overflow: auto;
-        width: 20rem;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
+<style>    
     /* Filter responsive CSS imported */
     
     label {
         margin-bottom: 0.5rem;
+        opacity: .9;
     }
 
     #trending {

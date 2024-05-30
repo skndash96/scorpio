@@ -12,6 +12,7 @@
         border-top: 2px solid var(--elevate);
         padding: 2rem;
         background: var(--elevate);
+        font-size: .8rem;
     }
     footer p {
         text-align: center;

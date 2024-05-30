@@ -1,5 +1,10 @@
 <script>
-    export let /**@type {string}*/ query, /**@type {string}*/ label;
+    export let
+        /**@type {string}*/ query,
+        /**@type {string}*/ label,
+        /**@type {boolean}*/ fast = false;
+
+    const TIME = fast ? 250 : 500;
 
     let val = "";
 
@@ -13,7 +18,7 @@
 
         tm = setTimeout(() => {
             query = val;
-        }, 500);
+        }, TIME);
     }
 
     /**
@@ -30,6 +35,9 @@
                 );
 
             if (d) d.firstChild.click();
+
+            //@ts-ignore
+            event.target.blur();
         }
     }
 </script>
@@ -47,6 +55,7 @@
         bind:value={val}
         type="search"
         on:keydown={handleKeyDown}
+        autocomplete="off"
         placeholder={"Search for " + label}
     />
 </div>
@@ -55,14 +64,12 @@
     div.search {
         position: relative;
     }
+    
     input {
         flex-shrink: 1;
         padding-left: 2rem;
         width: 100%;
-        border-color: var(--elevate);
-    }
-    input:focus {
-        border-color: var(--primary);
+        border: none;
     }
     
     span {
@@ -71,5 +78,6 @@
         top: 0.5rem;
         width: 1rem;
         height: 1rem;
+        opacity: .8;
     }
 </style>

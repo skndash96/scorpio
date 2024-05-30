@@ -5,7 +5,7 @@ html, html.light {
     --txt: #121212;
     --elevate: #00000011;
     --elevate-dark: #00000033;
-    --elevate-solid: #292929;
+    --elevate-solid: #e7e7e7;
 
     --primary: #ae47db;
     --secondary: #812ca5;
@@ -19,7 +19,9 @@ html, html.light {
         --txt: #F2EDE4;
         --elevate: #ffffff11;
         --elevate-dark: #ffffff33;
+        --elevate-solid: #292929;
     }
+    
     * {
         color-scheme: dark;
     }
