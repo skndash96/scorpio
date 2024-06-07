@@ -33,11 +33,12 @@
 <style>
     main {
         padding: 2rem 1rem;
+        width: fit-content;
+        margin: 0 auto;
     }
 
     #related {
         margin-top: 2rem;
-        width: fit-content;
     }
 
     #related li {

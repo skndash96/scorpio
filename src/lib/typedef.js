@@ -1,6 +1,6 @@
 /**
  * @typedef {object} ReportSchema
- * @property {string} timestamp timestamp of incidence
+ * @property {string} created_at timestamp of incidence
  * @property {string} id uuid
  * @property {string} title
  * @property {string} info
@@ -11,7 +11,6 @@
 
 /**
  * @typedef {object} AddReport
- * @property {Date} timestamp timestamp of incidence
  * @property {string} title
  * @property {string} info
  * @property {string} city

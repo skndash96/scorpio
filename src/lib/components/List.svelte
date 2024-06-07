@@ -52,10 +52,10 @@
 
     function get() {
         incoming = new Promise(async (res, rej) => {
-            let d = supabase.from(table).select();
+            let d = supabase.from(table).select("*").order('created_at', { ascending: false });
 
-            if (city) d = d.eq("city", city);
-            if (dept) d = d.eq("dept", dept);
+            if (city) d = d.ilike("city", "%"+city+"%");
+            if (dept) d = d.ilike("dept", "%"+dept+"%");
             
             if (words.length > 0) {
                 if (table === "profiles") {
@@ -90,7 +90,7 @@
 
 <div class="box">
     {#each data as record}
-        <a href="{table}/{record.id}"> <!-- makesure this link works -->
+        <a href="/{table}/{record.id}"> <!-- makesure this link works -->
             <svelte:component this={component} data={record} showMin elevate />
         </a>
     {/each}

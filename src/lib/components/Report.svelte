@@ -25,7 +25,7 @@
     <span style="font-size: 1.2rem; font-weight: 600;"> {r.title} </span>
 
     <div class="details">
-        <span> {formatTimestamp(r.timestamp)} </span>
+        <span> {formatTimestamp(r.created_at)} </span>
         <span> {r.dept} </span>
         <span> {r.city} </span>
     </div>
@@ -45,7 +45,7 @@
     {#if !showMin && r.accountable}
         <p>
             <span>Accountable person:</span>
-            <a href="profiles/{r.accountable.id}">
+            <a href="/profiles/{r.accountable.id}">
                 <Profile data={r.accountable} showMin elevate />
             </a>
         </p>

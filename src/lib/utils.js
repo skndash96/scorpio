@@ -54,7 +54,13 @@ export function formatTimestamp(t) {
  */
 export function letterOfName(s) {
     let w = s.split(/\s+/);
-    return (w[1] || w[0])[0]; //ignore first word (Mr. or Mrs.)
+
+    let l = w.map(l => l[0]);
+
+    if (["mr", "mrs", "ms", "bro", "sir"].some(p => w[0].toLowerCase().startsWith(p))) {
+        return l.slice(1,4).join("");
+    }
+    return l.slice(0,3).join("");
 }
 
 export const departments = [

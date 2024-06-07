@@ -38,6 +38,9 @@
 
             //@ts-ignore
             event.target.blur();
+        } else if (event.key === "Escape") {
+            //@ts-ignore
+            event.target.blur();
         }
     }
 </script>
