@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <header className="px-2 py-1 flex justify-between">
             <div className="flex items-center gap-2">
-                <button className={icon}>
+                <button className={icon} disabled>
                     <BiMenu size={24} />
                 </button>
 
@@ -37,7 +37,7 @@ export default function Header() {
                     <span className="hidden xs:inline"> Write </span>
                 </Link>
 
-                <button className={icon}>
+                <button className={icon} disabled={true}>
                     <AccountIcon size={20} />
                 </button>
             </div>

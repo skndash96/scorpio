@@ -4,13 +4,15 @@ import { IoSearch as SearchIcon } from "react-icons/io5";
 export default function SearchInput({
     setQuery,
     handleKeyDown,
-    fast
+    debounce,
+    placeholder = "Type to search"
 }: {
     setQuery: (q: string) => void,
     handleKeyDown?: React.KeyboardEventHandler
-    fast: boolean
+    debounce: boolean,
+    placeholder?: string
 }) {
-    const bounce = fast ? 0 : 300;
+    const bounce = debounce ? 500 : 0;
 
     let tm = useRef<NodeJS.Timeout>();
     let inputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +36,7 @@ export default function SearchInput({
             <input
                 className="grow px-2 py-1"
                 type="search"
-                placeholder="Type to search"
+                placeholder={placeholder}
                 onInput={handleInput}
                 onKeyDown={_handleKeyDown}
                 ref={inputRef}

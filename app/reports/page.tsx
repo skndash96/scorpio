@@ -1,39 +1,57 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import supabase from "../lib/supabase";
-import { PostgrestError } from "@supabase/supabase-js";
+import { PostgrestError, PostgrestResponse } from "@supabase/supabase-js";
 import Report from "../components/Report";
 import Error from "../components/Error";
 import List from "../components/List";
-import Search from "../components/Search";
-import { cities, departments } from "../lib/utils";
-import SearchInput from "../components/SearchInput";
+import Filters from "../components/Filters";
+import Loading from "../components/Loading";
+import { toTsquery } from "../lib/utils";
 
-async function getReports(step: number, offset: number) {
-    let q = await supabase
+async function getReports({ words, cities, departments }: {
+    words?: string,
+    cities?: string[],
+    departments?: string[]
+}, step: number, offset: number) {
+    let q = supabase
         .from("reports")
-        .select("*, accountable:profiles(*)")
+        .select("*, accountable:profiles(*)");
+
+    if (words?.length) q = q.textSearch("title", toTsquery(words));
+    if (cities?.length) q = q.textSearch("city", toTsquery(cities));
+    if (departments?.length) q = q.textSearch("dept", toTsquery(departments));
+
+    return await q
         .returns<ReportSchema[]>()
         .order('created_at', { ascending: false })
         .range(offset, offset + step);
-    return q;
 }
 
 export default function Reports() {
     let [data, setData] = useState<ReportSchema[]>([]);
     let [error, setError] = useState<PostgrestError | null>(null);
+    let [loading, setLoading] = useState<boolean>(true);
+
+    let [cities, setCities] = useState<string[]>([]);
+    let [departments, setDepts] = useState<string[]>([]);
+    let [words, setWords] = useState<string>("");
 
     let step = useRef(20), offset = useRef(0);
 
     useEffect(() => {
-        //initial fetch
-        if (data.length) return;
+        offset.current = 0;
 
-        getReports(step.current, offset.current).then(({ data, error }) => {
+        getReports({
+            words, cities, departments
+        }, step.current, offset.current).then((res: PostgrestResponse<ReportSchema>) => {
+            let { data, error } = res;
+
             setError(error);
             setData(data || []);
+            setLoading(false);
         });
-    }, []);
+    }, [cities, departments, words]);
 
     if (error) {
         console.error("500, Failed to get reports", error);
@@ -46,48 +64,21 @@ export default function Reports() {
         );
     }
 
-    let [fruits, setFruits] = useState<string[]>([]);
-
     return (
-        <main>
-            <div className="my-8">
-                <ReportFilters />
-            </div>
+        <main className="p-2 pt-6 max-w-2xl mx-auto">
+            <Filters
+                label="Reports"
+                cities={cities}
+                setCities={setCities}
+                departments={departments}
+                setDepts={setDepts}
+                words={words}
+                setWords={setWords}
+            />
 
-            <List data={data} Component={Report} />
+            {loading
+                ? <Loading />
+                : <List data={data} Component={Report} />}
         </main>
-    );
-}
-
-function ReportFilters() {
-    let [cs, setCs] = useState<string[]>([]);
-    let [ds, setDs] = useState<string[]>([]);
-    let [q, setQ] = useState<string>("");
-
-    return (
-        <form className="p-1 w-full max-w-96 flex flex-col gap-4" onSubmit={e => e.preventDefault()}>
-            <fieldset>
-                <label>Words:</label>
-                <SearchInput setQuery={setQ} fast={false} />
-            </fieldset>
-
-            <Search
-                label="Departments"
-                data={departments}
-                display={s => s}
-                selected={ds}
-                setSelected={setDs}
-                fast={true}
-            />
-
-            <Search
-                label="Cities"
-                data={cities}
-                display={s => s}
-                selected={cs}
-                setSelected={setCs}
-                fast={true}
-            />
-        </form>
     );
 }

@@ -4,17 +4,19 @@ import SearchInput from "./SearchInput";
 export default function Search<T>({
     label,
     data,
-    fast,
+    debounce,
     selected,
     display,
-    setSelected
+    setSelected,
+    custom
 }: {
     label: string,
-    fast: boolean,
+    debounce: boolean,
     data: T[],
     selected: T[],
     display: (item: T) => string,
-    setSelected: Dispatch<SetStateAction<T[]>>
+    setSelected: Dispatch<SetStateAction<T[]>>,
+    custom: (q: string) => T
 }) {
     let [query, setQuery] = useState<string>("");
     let listRef = useRef<HTMLUListElement>(null);
@@ -53,6 +55,8 @@ export default function Search<T>({
                 if (c !== null) li[c].querySelector("button")?.click();
                 currentRef.current = null;
                 break;
+            default:
+                currentRef.current = null;
         };
 
         c = currentRef.current;
@@ -71,9 +75,9 @@ export default function Search<T>({
 
             <div>
                 <ul className="flex flex-wrap gap-2">
-                    {selected.map((item, idx) => (
-                        <li key={idx} className="last:mb-2">
-                            <button className="px-1 bg-fuchsia-200 bg-opacity-10" onClick={() => remove(item)}>
+                    {selected.map(item => (
+                        <li key={display(item)} className="last:mb-2">
+                            <button className="px-1 text-[.8rem] bg-fuchsia-200 bg-opacity-10" onClick={() => remove(item)}>
                                 {display(item)}
                                 <span className="ml-2 text-sm text-red-400">x</span>
                             </button>
@@ -81,17 +85,23 @@ export default function Search<T>({
                     ))}
                 </ul>
                 
-                <SearchInput handleKeyDown={handleKeyDown} fast={fast} setQuery={setQuery} />
+                <SearchInput handleKeyDown={handleKeyDown} debounce={debounce} setQuery={setQuery} />
             </div>
 
             <ul ref={listRef} className="list h-72 overflow-y-auto absolute left-0 right-0 bottom-0 translate-y-full bg-fuchsia-800 border-solid border-2 border-fuchsia-400 flex-col items-stretch">
-                {data.map((item, idx) => (
-                    <li key={idx} className={!selected.includes(item) && display(item).toLowerCase().includes(query.toLowerCase()) ? "show" : "hidden"}>
+                {data.map(item => (
+                    <li key={display(item)} className={!selected.includes(item) && display(item).toLowerCase().includes(query.toLowerCase()) ? "show" : "hidden"}>
                         <button className="w-full px-2 py-1 text-left hover:bg-fuchsia-600" onClick={() => add(item)}>
                             {display(item)}
                         </button>
                     </li>
                 ))}
+
+                <li>
+                    <button className="show w-full px-2 py-1 text-left hover:bg-fuchsia-600" onClick={() => custom(query)}>
+                        Add "{query}"
+                    </button>
+                </li>
             </ul>
         </fieldset>
     );

@@ -19,13 +19,18 @@ html {
     text-decoration: none;
     list-style-type: none;
     color: inherit;
-    /* font-family: inherit; */
 }
 
 body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Open Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+    font-family: 'Open Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif;
+    overflow-y: scroll;
+}
+
+button[disabled] {
+    opacity: 1;
+    cursor: unset;
 }
 
 .search .list {
@@ -36,5 +41,6 @@ body {
     z-index: 1;
 }
 .search .list li.hovered {
-    color: red !important;
+    background-color: rgb(74 4 78);
+    color: white;
 }

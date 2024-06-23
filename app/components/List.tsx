@@ -9,7 +9,7 @@ export default function List<T> ({
     }>
 }) {
     return (
-        <div className="p-2 max-w-2xl mx-auto flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
             {data.length === 0 && (
                 <p>
                     No records Found
