@@ -99,7 +99,7 @@ export default function Search<T>({
 
                 <li>
                     <button className="show w-full px-2 py-1 text-left hover:bg-fuchsia-600" onClick={() => custom(query)}>
-                        Add "{query}"
+                        Add &quot;{query}&quot;
                     </button>
                 </li>
             </ul>
