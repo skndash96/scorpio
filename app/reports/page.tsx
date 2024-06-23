@@ -4,6 +4,7 @@ import supabase from "../lib/supabase";
 import { PostgrestError } from "@supabase/supabase-js";
 import Report from "../components/Report";
 import Error from "../components/Error";
+import List from "../components/List";
 
 async function getReports(step: number, offset: number) {
     let q = await supabase
@@ -44,11 +45,7 @@ export default function Reports() {
 
     return (
         <main>
-            <div className="list">
-                {data.map((record, idx) => (
-                    <Report key={idx} expand={false} record={record} />
-                ))}
-            </div>
+            <List data={data} Component={Report} />
         </main>
     );
 }

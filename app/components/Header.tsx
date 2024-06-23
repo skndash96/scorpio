@@ -22,12 +22,12 @@ export default function Header() {
             </div>
 
             <div className="flex gap-2">
-                <Link href="/" className={icon}>
+                <Link href="/profiles" className={icon}>
                     <ProfileIcon size={24} />
                     <span className="hidden xs:inline"> Profiles </span>
                 </Link>
 
-                <Link href="/" className={icon}>
+                <Link href="/reports" className={icon}>
                     <ReportIcon size={20} />
                     <span className="hidden xs:inline"> Reports </span>
                 </Link>

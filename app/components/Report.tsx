@@ -34,13 +34,14 @@ function Content({
                 )
             }
 
-            <br/>
-            
             {expand && record.accountable && (
-                <>
-                    <h4 className="text-sm text-fuchsia-300"> Accountable: </h4>
+                <div className="mt-8">
+                    <h4 className="text-sm text-fuchsia-300">
+                        Accountable:
+                    </h4>
+                    
                     <Profile record={record.accountable} expand={false} />
-                </>
+                </div>
             )}
         </div>
     );

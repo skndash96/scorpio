@@ -29,7 +29,7 @@ export default async function ProfilePage({
     />;
     
     return (
-        <div className="p-2 max-w-4xl mx-auto">
+        <div className="p-2 w-fit mr-auto">
             <Profile record={record} expand={true} />
         </div>
     );

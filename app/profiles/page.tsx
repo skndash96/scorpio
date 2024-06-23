@@ -4,6 +4,7 @@ import supabase from "../lib/supabase";
 import { PostgrestError } from "@supabase/supabase-js";
 import Error from "../components/Error";
 import Profile from "../components/Profile";
+import List from "../components/List";
 
 async function getProfiles(step: number, offset: number) {
     let q = await supabase
@@ -38,11 +39,7 @@ export default function Profiles() {
 
     return (
         <main>
-            <div className="list">
-                {data.map((record, idx) => (
-                    <Profile key={idx} expand={false} record={record} />
-                ))}
-            </div>
+            <List data={data} Component={Profile} />
         </main>
     );
 }

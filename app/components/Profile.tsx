@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Report from "./Report";
 import { getLetters } from "../lib/utils";
+import List from "./List";
 
 export default function Profile({
     record,
@@ -56,37 +57,22 @@ function ProfileCard({
                 </div>
 
             </div>
-            
+
             <div className="mt-8">
-                {expand && <RelatedReports data={record.accountable} />}
+                {expand && (
+                    <div className="list mr-auto ml-0">
+                        <h2 className="text-2xl font-semibold">
+                            Related Reports:
+                        </h2>
+
+                        <List data={record.accountable} Component={Report} />
+                    </div>
+                )}
             </div>
         </>
     );
 }
 
-function RelatedReports({
-    data
-}: {
-    data: ReportSchema[]
-}) {
-    return (
-        <div className="list mr-auto ml-0">
-            <h2 className="text-2xl font-semibold">
-                Related Reports:
-            </h2>
-
-            {data.length === 0 && (
-                <p>
-                    No Reports Found
-                </p>
-            )}
-
-            {data.map((record, idx) => (
-                <Report key={idx} expand={false} record={record} />
-            ))}
-        </div>
-    );
-}
 
 function Avatar({
     image, name, size
