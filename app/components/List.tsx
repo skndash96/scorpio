@@ -12,12 +12,12 @@ export default function List<T> ({
         <div className="p-2 max-w-2xl mx-auto flex flex-col gap-4">
             {data.length === 0 && (
                 <p>
-                    No Reports Found
+                    No records Found
                 </p>
             )}
             
-            {data.map(record => (
-                <Component expand={false} record={record} />
+            {data.map((record, idx) => (
+                <Component key={idx} expand={false} record={record} />
             ))}
         </div>
     );

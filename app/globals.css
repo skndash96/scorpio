@@ -27,3 +27,14 @@ body {
     color: var(--text);
     font-family: 'Open Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
 }
+
+.search .list {
+    display: none;
+}
+.search:has(input[type='search']:focus) .list, .search .list:hover {
+    display: flex;
+    z-index: 1;
+}
+.search .list li.hovered {
+    color: red !important;
+}

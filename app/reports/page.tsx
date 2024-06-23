@@ -5,6 +5,9 @@ import { PostgrestError } from "@supabase/supabase-js";
 import Report from "../components/Report";
 import Error from "../components/Error";
 import List from "../components/List";
+import Search from "../components/Search";
+import { cities, departments } from "../lib/utils";
+import SearchInput from "../components/SearchInput";
 
 async function getReports(step: number, offset: number) {
     let q = await supabase
@@ -43,9 +46,48 @@ export default function Reports() {
         );
     }
 
+    let [fruits, setFruits] = useState<string[]>([]);
+
     return (
         <main>
+            <div className="my-8">
+                <ReportFilters />
+            </div>
+
             <List data={data} Component={Report} />
         </main>
+    );
+}
+
+function ReportFilters() {
+    let [cs, setCs] = useState<string[]>([]);
+    let [ds, setDs] = useState<string[]>([]);
+    let [q, setQ] = useState<string>("");
+
+    return (
+        <form className="p-1 w-full max-w-96 flex flex-col gap-4" onSubmit={e => e.preventDefault()}>
+            <fieldset>
+                <label>Words:</label>
+                <SearchInput setQuery={setQ} fast={false} />
+            </fieldset>
+
+            <Search
+                label="Departments"
+                data={departments}
+                display={s => s}
+                selected={ds}
+                setSelected={setDs}
+                fast={true}
+            />
+
+            <Search
+                label="Cities"
+                data={cities}
+                display={s => s}
+                selected={cs}
+                setSelected={setCs}
+                fast={true}
+            />
+        </form>
     );
 }
