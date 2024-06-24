@@ -33,14 +33,19 @@ button[disabled] {
     cursor: unset;
 }
 
-.search .list {
-    display: none;
+.toast {
+    animation: popup 200ms ease-out 1;
+    @apply fixed bottom-8 right-8 p-2 flex flex-col origin-bottom-right;
 }
-.search:has(input[type='search']:focus) .list, .search .list:hover {
-    display: flex;
-    z-index: 1;
+.bad.toast {
+    @apply bg-red-600;
 }
-.search .list li.hovered {
-    background-color: rgb(74 4 78);
-    color: white;
+
+@keyframes popup {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
 }

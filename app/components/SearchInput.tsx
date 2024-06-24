@@ -3,16 +3,16 @@ import { IoSearch as SearchIcon } from "react-icons/io5";
 
 export default function SearchInput({
     setQuery,
-    handleKeyDown,
     debounce,
     placeholder = "Type to search"
 }: {
     setQuery: (q: string) => void,
-    handleKeyDown?: React.KeyboardEventHandler
     debounce: boolean,
     placeholder?: string
 }) {
     const bounce = debounce ? 500 : 0;
+
+    let currentRef = useRef<number|null>(null); //auto complete
 
     let tm = useRef<NodeJS.Timeout>();
     let inputRef = useRef<HTMLInputElement>(null);
@@ -23,10 +23,43 @@ export default function SearchInput({
         tm.current = setTimeout(() => setQuery(inputRef.current?.value || ""), bounce);
     };
 
-    const _handleKeyDown : React.KeyboardEventHandler = (event) => {
+    const handleKeyDown : React.KeyboardEventHandler = (event) => {
         if (event.key === "Enter") event.preventDefault();
 
-        handleKeyDown && handleKeyDown(event);
+        let ul = inputRef.current?.parentElement?.parentElement?.querySelector(".list");
+        if (!ul) return;
+
+        let c = currentRef.current;
+
+        let li = ul.querySelectorAll("li.show");
+        if (li.length === 0) {
+            currentRef.current = null;
+            return;
+        }
+
+        if (c !== null) li[c].classList.remove("hovered");
+
+        switch (event.key) {
+            case "ArrowDown":
+                currentRef.current = c === null ? 0 : c + 1 === li.length ? c : c + 1;
+                break;
+            case "ArrowUp":
+                currentRef.current = c === null || c === 0 ? null : c - 1;
+                break;
+            case "Enter":
+                if (c !== null) li[c].querySelector("button")?.click();
+                currentRef.current = null;
+                break;
+            default:
+                currentRef.current = null;
+        };
+
+        c = currentRef.current;
+
+        if (c !== null) {
+            li[c].classList.add("hovered");
+            li[c].scrollIntoView(false);
+        };
     };
 
     return (
@@ -38,7 +71,7 @@ export default function SearchInput({
                 type="search"
                 placeholder={placeholder}
                 onInput={handleInput}
-                onKeyDown={_handleKeyDown}
+                onKeyDown={handleKeyDown}
                 ref={inputRef}
             />
         </div>

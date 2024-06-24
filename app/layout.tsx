@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import Header from "./components/Header";
+import "./globals.css";
 
 export const metadata: Metadata = {
     title: "Scorpio"
@@ -17,6 +17,8 @@ function Layout({
             <main className="grow">
                 {children}
             </main>
+
+            <div id="toasts" className="fixed bottom-8 right-8 max-w-lg"></div>
         </div>
     );
 }

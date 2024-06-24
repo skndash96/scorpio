@@ -1,6 +1,7 @@
 import Error from "@/app/components/Error";
 import Report from "@/app/components/Report";
 import supabase from "@/app/lib/supabase";
+import Head from "next/head";
 
 async function get(id: string) {
     return await supabase
@@ -17,19 +18,23 @@ export default async function ReportPage({
 }) {
 
     let { data: record, error } = await get(id);
-    
+
     if (error) return <Error
         message="Failed to get Report"
         statusCode={500}
     />;
-    
+
     if (!record) return <Error
         message="Report not found"
         statusCode={404}
     />;
-    
+
     return (
         <div className="p-2 max-w-4xl mx-auto">
+            <Head>
+                <title> Scorpio | View Report </title>
+            </Head>
+
             <Report record={record} expand={true} />
         </div>
     );

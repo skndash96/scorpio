@@ -1,3 +1,10 @@
+interface Toast {
+    id: number,
+    message: string,
+    type: ToastType
+}
+type ToastType  = "good"|"bad"|"neutral";
+
 interface ReportSchema {
     created_at: string
     id: string
@@ -13,7 +20,8 @@ interface ReportBuilder {
     info: string
     city: string
     dept: string
-    accountable: string|null
+    accountable: string|null,
+    created_at?: string
 }
 
 

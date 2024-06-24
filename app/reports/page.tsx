@@ -8,6 +8,7 @@ import List from "../components/List";
 import Filters from "../components/Filters";
 import Loading from "../components/Loading";
 import { toTsquery } from "../lib/utils";
+import Head from "next/head";
 
 async function getReports({ words, cities, departments }: {
     words?: string,
@@ -42,6 +43,8 @@ export default function Reports() {
     useEffect(() => {
         offset.current = 0;
 
+        setLoading(true);
+        
         getReports({
             words, cities, departments
         }, step.current, offset.current).then((res: PostgrestResponse<ReportSchema>) => {
@@ -66,6 +69,10 @@ export default function Reports() {
 
     return (
         <main className="p-2 pt-6 max-w-2xl mx-auto">
+            <Head>
+                <title> Scorpio | Reports page </title>
+            </Head>
+
             <Filters
                 label="Reports"
                 cities={cities}

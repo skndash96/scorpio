@@ -1,0 +1,24 @@
+.search {
+    @apply relative;
+}
+
+.search .list {
+    @apply hidden h-52 overflow-y-auto absolute left-0 right-0 bottom-0 translate-y-full bg-fuchsia-800 border-solid border-2 border-fuchsia-400 flex-col items-stretch *:border-[1px] *:border-solid *:border-fuchsia-400;
+}
+.search:has(input[type='search']:focus) .list, .search .list:hover {
+    @apply flex z-[1];
+}
+.search .list li.hovered {
+    background-color: rgb(74 4 78);
+    color: white;
+}
+.search .list button {
+    @apply w-full px-2 py-1 text-left hover:bg-fuchsia-600;
+}
+
+.search .selected button {
+    @apply px-1 text-[.8rem] bg-fuchsia-200 bg-opacity-10;
+}
+.search .selected button span {
+    @apply ml-2 text-sm text-red-400;
+}

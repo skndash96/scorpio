@@ -8,6 +8,7 @@ import List from "../components/List";
 import Loading from "../components/Loading";
 import Filters from "../components/Filters";
 import { toTsquery } from "../lib/utils";
+import Head from "next/head";
 
 async function getProfiles({ words, cities, departments }: {
     words?: string,
@@ -43,6 +44,8 @@ export default function Profiles() {
     useEffect(() => {
         offset.current = 0;
 
+        setLoading(true);
+        
         getProfiles({
             words, cities, departments
         }, step.current, offset.current).then((res: PostgrestResponse<ProfileSchema>) => {
@@ -63,6 +66,10 @@ export default function Profiles() {
 
     return (
         <main className="p-2 max-w-2xl mx-auto">
+            <Head>
+                <title> Scorpio | Profiles page </title>
+            </Head>
+
             <Filters
                 label="Profiles"
                 cities={cities}

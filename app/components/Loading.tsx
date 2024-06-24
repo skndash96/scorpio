@@ -1,6 +1,6 @@
 export default function Loading() {
     return (
-        <div className="w-fit mx-auto p-4">
+        <div className="p-4 pl-8">
             Loading...
         </div>
     );
