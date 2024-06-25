@@ -55,19 +55,6 @@ function ProfileCard({
                         </span>
                     </div>
                 </div>
-
-            </div>
-
-            <div className="mt-8">
-                {expand && (
-                    <div className="list mr-auto ml-0">
-                        <h2 className="text-2xl font-semibold">
-                            Related Reports:
-                        </h2>
-
-                        <List data={record.accountable} Component={Report} />
-                    </div>
-                )}
             </div>
         </>
     );
@@ -87,7 +74,7 @@ function Avatar({
         <div style={{
             width: `${size}px`,
             height: `${size}px`
-        }} className="p-2 grid place-items-center bg-fuchsia-800 rounded-full">
+        }} className="p-2 shrink-0 grid place-items-center bg-fuchsia-800 rounded-full">
             {getLetters(name)}
         </div>
     );

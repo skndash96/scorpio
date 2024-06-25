@@ -107,6 +107,7 @@ export default function Write() {
                         onChange={(e) => setDate(e.target.value)}
                         type="date"
                         style={{"colorScheme": "dark"}}
+                        placeholder="Date of Incidence"
                     />
                 </fieldset>
 
